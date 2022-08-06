@@ -9,7 +9,6 @@ import com.auth0.jwt.JWTVerifier;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.apache.tomcat.util.codec.binary.StringUtils;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +20,18 @@ public class BasicAuthenInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         String authHeader = request.getHeader("Authorization");
-        
+
+        String urlRequest = request.getRequestURI();
+        String method = request.getMethod();
+        System.out.println(urlRequest);
+        System.out.println(method);
+
+//        En caso necesitemos una ruta que no tenga autenticacion
+//        if( urlRequest.equals("/api")){
+//            return true;
+//        }
+
+//      autentica la ruta
         if (authHeader != null) {
             try {
                 System.out.println("\nBearer Token: " + authHeader);
