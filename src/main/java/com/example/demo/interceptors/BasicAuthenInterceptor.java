@@ -27,9 +27,10 @@ public class BasicAuthenInterceptor extends HandlerInterceptorAdapter {
         System.out.println(method);
 
 //        En caso necesitemos una ruta que no tenga autenticacion
-//        if( urlRequest.equals("/api")){
-//            return true;
-//        }
+//        Al iniciar sesion no se evaluará token
+        if( urlRequest.equals("/api") && method.equals(("POST"))){
+            return true;
+        }
 
 //      autentica la ruta
         if (authHeader != null) {

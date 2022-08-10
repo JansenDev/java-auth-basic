@@ -6,6 +6,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.example.demo.models.DataResponse;
 import com.example.demo.models.Login;
 import org.apache.juli.logging.Log;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,8 @@ import java.util.Map;
 @RestController
 @RequestMapping(value = "/api")
 public class demoController {
+    @Value("${SECRET_JWT}")
+    private String SECRET_JWT;
 
     @GetMapping()
     public String test() {
@@ -24,7 +27,7 @@ public class demoController {
     }
 
     @PostMapping()
-    public ResponseEntity<DataResponse<String>> tokenGenerate(@RequestBody Login login) {
+    public ResponseEntity<DataResponse<String>> login(@RequestBody Login login) {
         Map<String, String> payload = new HashMap<>();
         payload.put("user", login.getUsername());
         payload.put("role", "usuario");
