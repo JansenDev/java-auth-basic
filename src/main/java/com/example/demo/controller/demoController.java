@@ -22,8 +22,15 @@ public class demoController {
     private String SECRET_JWT;
 
     @GetMapping()
-    public String test() {
-        return "Hello world";
+    public ResponseEntity<String> test() {
+        return new ResponseEntity<>("Hello World", HttpStatus.CREATED);
+    }
+
+    @GetMapping("/otro")
+    public ResponseEntity<DataResponse<String>> test2() {
+        DataResponse<String> dataresponse = new  DataResponse<>();
+        dataresponse.setData("segunda ruta");
+        return new ResponseEntity<>(dataresponse,HttpStatus.OK) ;
     }
 
     @PostMapping()

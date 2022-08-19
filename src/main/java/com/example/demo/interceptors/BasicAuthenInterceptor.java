@@ -20,11 +20,17 @@ public class BasicAuthenInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         String authHeader = request.getHeader("Authorization");
-
         String urlRequest = request.getRequestURI();
         String method = request.getMethod();
         System.out.println(urlRequest);
         System.out.println(method);
+
+//        if( method.equals(("OPTIONS"))){
+//            response.sendError(200, "Unauthorized");
+//            System.out.println("OPCIONSSSSSSSSS");
+//            return false;
+//        }
+
 
 //        En caso necesitemos una ruta que no tenga autenticacion
 //        Al iniciar sesion no se evaluará token
@@ -32,8 +38,16 @@ public class BasicAuthenInterceptor extends HandlerInterceptorAdapter {
             return true;
         }
 
+//
+//        if(true){
+//            return true;
+//        }
+
+        System.out.println("2131232131231231312" );
 //      autentica la ruta
         if (authHeader != null) {
+            System.out.println("ENTRO IF" );
+
             try {
                 System.out.println("\nBearer Token: " + authHeader);
 
@@ -66,18 +80,20 @@ public class BasicAuthenInterceptor extends HandlerInterceptorAdapter {
                 if(user.equals("Janssen")){
                     System.out.println("\nNo tiene autorizacion el usuario: "+ user);
                     response.sendError(401, "{\"Unauthorized\":\"No tiene permisos\"}");
+                    System.out.println("AUTHENTICATION: FALSE" );
                     return false;
                 }
+                System.out.println("AUTHENTICATION: TRUE" );
                 return true;
             } catch (JWTVerificationException exception) {
-
+                System.out.println("AUTHENTICATION: FALSE" );
+                return false;
             }
 
         } else {
             response.sendError(401, "Unauthorized");
             return false;
         }
-        return super.preHandle(request, response, handler);
     }
 
     public String decodeToJson(final String base64) {
