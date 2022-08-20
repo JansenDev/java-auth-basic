@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +24,13 @@ public class demoController {
 
     @GetMapping()
     public ResponseEntity<String> test() {
-        return new ResponseEntity<>("Hello World", HttpStatus.CREATED);
+        return new ResponseEntity<>("Hello World", HttpStatus.CREATED );
+    }
+  @RequestMapping( method = RequestMethod.OPTIONS)
+    public ResponseEntity<String> test3( HttpServletResponse response) {
+      System.out.println("controlador");
+      System.out.println(response.getHeader("Authorization"));
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/otro")

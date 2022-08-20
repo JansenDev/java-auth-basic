@@ -9,13 +9,16 @@ import com.auth0.jwt.JWTVerifier;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.apache.tomcat.util.codec.binary.StringUtils;
+import org.springframework.web.servlet.HandlerAdapter;
+import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
-public class BasicAuthenInterceptor extends HandlerInterceptorAdapter {
+public class BasicAuthenInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
@@ -25,11 +28,12 @@ public class BasicAuthenInterceptor extends HandlerInterceptorAdapter {
         System.out.println(urlRequest);
         System.out.println(method);
 
-//        if( method.equals(("OPTIONS"))){
+        if( method.equals(("OPTIONS"))){
 //            response.sendError(200, "Unauthorized");
-//            System.out.println("OPCIONSSSSSSSSS");
-//            return false;
-//        }
+//            response.sendRedirect("200");
+            System.out.println("Pasa");
+            return true;
+        }
 
 
 //        En caso necesitemos una ruta que no tenga autenticacion
@@ -99,4 +103,6 @@ public class BasicAuthenInterceptor extends HandlerInterceptorAdapter {
     public String decodeToJson(final String base64) {
         return StringUtils.newStringUtf8(Base64.decodeBase64(base64));
     }
+
+
 }
